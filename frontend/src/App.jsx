@@ -1,4 +1,16 @@
+import { useState } from "react";
+
 function App() {
+  const [profile, setProfile] = useState("");
+
+  function handleProfileChange(event) {
+    setProfile(event.target.value);
+  }
+
+  function handleProfileSave() {
+    console.log("Saved profile:", profile);
+  }
+
   return (
     <main className="app">
       <header className="hero">
@@ -23,11 +35,15 @@ function App() {
           </p>
 
           <textarea
+            value={profile}
+            onChange={handleProfileChange}
             placeholder="Example: React, Python, Flask, Git, SQL..."
             rows="7"
           />
 
-          <button>Save profile</button>
+          <button onClick={handleProfileSave}>
+            Save profile
+          </button>
         </div>
 
         <div className="card">
