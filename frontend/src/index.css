@@ -119,3 +119,12 @@ button:hover {
     padding: 35px 18px;
   }
 }
+.status-message {
+  max-width: 900px;
+  margin: 20px auto 0;
+  padding: 12px 16px;
+  background: #ecfdf3;
+  border: 1px solid #abefc6;
+  border-radius: 10px;
+  color: #067647;
+}

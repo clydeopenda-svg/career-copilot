@@ -2,13 +2,27 @@ import { useState } from "react";
 
 function App() {
   const [profile, setProfile] = useState("");
+  const [jobDescription, setJobDescription] = useState("");
+  const [saved, setSaved] = useState("");
 
   function handleProfileChange(event) {
     setProfile(event.target.value);
+    setSaved("");
+  }
+
+  function handleJobDescriptionChange(event) {
+    setJobDescription(event.target.value);
+    setSaved("");
   }
 
   function handleProfileSave() {
+    setSaved("Profile saved.");
     console.log("Saved profile:", profile);
+  }
+
+  function handleJobSave() {
+    setSaved("Job description saved.");
+    console.log("Saved job description:", jobDescription);
   }
 
   return (
@@ -53,13 +67,19 @@ function App() {
           </p>
 
           <textarea
+            value={jobDescription}
+            onChange={handleJobDescriptionChange}
             placeholder="Paste the job description here..."
             rows="7"
           />
 
-          <button>Analyze job</button>
+          <button onClick={handleJobSave}>
+            Save job
+          </button>
         </div>
       </section>
+
+      {saved && <p className="status-message">{saved}</p>}
     </main>
   );
 }
