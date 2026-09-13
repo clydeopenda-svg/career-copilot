@@ -1,6 +1,10 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
+from dotenv import load_dotenv
+import os
 import re
+
+load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
@@ -77,10 +81,29 @@ def get_learning_priority(missing_skills):
     return ordered_skills[:3]
 
 
+def get_ai_config():
+    return {
+        "provider": os.getenv("AI_PROVIDER", ""),
+        "model": os.getenv("AI_MODEL", ""),
+        "configured": bool(os.getenv("AI_API_KEY")),
+    }
+
+
 @app.route("/")
 def home():
     return jsonify({
         "message": "Career Copilot API is running"
+    })
+
+
+@app.route("/api/ai-status")
+def ai_status():
+    config = get_ai_config()
+
+    return jsonify({
+        "provider": config["provider"],
+        "model": config["model"],
+        "configured": config["configured"],
     })
 
 
