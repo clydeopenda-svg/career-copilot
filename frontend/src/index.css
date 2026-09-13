@@ -151,6 +151,7 @@ button:disabled {
 }
 
 .results h3 {
+  margin-top: 28px;
   margin-bottom: 6px;
 }
 
@@ -162,6 +163,37 @@ button:disabled {
 .error-message {
   margin: 0;
   font-weight: 600;
+}
+
+.priority-list {
+  margin: 12px 0 24px;
+  padding-left: 24px;
+}
+
+.priority-list li {
+  margin-bottom: 8px;
+  text-transform: capitalize;
+}
+
+.recommendations {
+  display: grid;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.recommendation {
+  padding: 16px;
+  background: #f9fafb;
+  border: 1px solid #eaecf0;
+  border-radius: 12px;
+}
+
+.recommendation strong {
+  text-transform: capitalize;
+}
+
+.recommendation p {
+  margin: 8px 0 0;
 }
 
 .status-message {

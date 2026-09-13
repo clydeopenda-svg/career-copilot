@@ -22,6 +22,22 @@ SKILL_RECOMMENDATIONS = {
 }
 
 
+SKILL_PRIORITY = [
+    "html",
+    "css",
+    "javascript",
+    "typescript",
+    "react",
+    "node",
+    "python",
+    "flask",
+    "sql",
+    "api",
+    "git",
+    "github",
+]
+
+
 def contains_skill(text, skill):
     pattern = rf"\b{re.escape(skill)}\b"
     return re.search(pattern, text, re.IGNORECASE) is not None
@@ -49,6 +65,16 @@ def get_recommendations(missing_skills):
             })
 
     return recommendations
+
+
+def get_learning_priority(missing_skills):
+    ordered_skills = [
+        skill
+        for skill in SKILL_PRIORITY
+        if skill in missing_skills
+    ]
+
+    return ordered_skills[:3]
 
 
 @app.route("/")
@@ -102,6 +128,7 @@ def analyze():
 
     summary = get_match_summary(match_score)
     recommendations = get_recommendations(missing_skills)
+    learning_priority = get_learning_priority(missing_skills)
 
     return jsonify({
         "matchScore": match_score,
@@ -109,6 +136,7 @@ def analyze():
         "matchingSkills": matching_skills,
         "missingSkills": missing_skills,
         "recommendations": recommendations,
+        "learningPriority": learning_priority,
     })
 
 

@@ -182,6 +182,20 @@ function App() {
                   <p>No missing skills found.</p>
                 )}
 
+                {analysis.learningPriority.length > 0 && (
+                  <>
+                    <h3>Your learning priority</h3>
+
+                    <ol className="priority-list">
+                      {analysis.learningPriority.map((skill) => (
+                        <li key={skill}>
+                          <strong>{skill}</strong>
+                        </li>
+                      ))}
+                    </ol>
+                  </>
+                )}
+
                 {analysis.recommendations.length > 0 && (
                   <>
                     <h3>Recommended next steps</h3>
