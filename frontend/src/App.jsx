@@ -158,6 +158,10 @@ function App() {
                   {analysis.matchScore}%
                 </p>
 
+                <p className="summary">
+                  {analysis.summary}
+                </p>
+
                 <h3>Skills you have</h3>
 
                 {analysis.matchingSkills.length > 0 ? (

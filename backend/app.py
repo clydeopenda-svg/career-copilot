@@ -27,6 +27,15 @@ def contains_skill(text, skill):
     return re.search(pattern, text, re.IGNORECASE) is not None
 
 
+def get_match_summary(match_score):
+    if match_score >= 80:
+        return "Strong match: you have most of the skills mentioned in this job description."
+    elif match_score >= 50:
+        return "Good starting point: you match several requirements, but there are some skills worth improving."
+    else:
+        return "Needs improvement: there are several important skills in the job description that are not in your profile yet."
+
+
 @app.route("/")
 def home():
     return jsonify({
@@ -76,8 +85,11 @@ def analyze():
     else:
         match_score = 0
 
+    summary = get_match_summary(match_score)
+
     return jsonify({
         "matchScore": match_score,
+        "summary": summary,
         "matchingSkills": matching_skills,
         "missingSkills": missing_skills,
     })
