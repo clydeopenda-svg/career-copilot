@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
+import re
 
 app = Flask(__name__)
 CORS(app)
@@ -19,6 +20,11 @@ COMMON_SKILLS = [
     "typescript",
     "api",
 ]
+
+
+def contains_skill(text, skill):
+    pattern = rf"\b{re.escape(skill)}\b"
+    return re.search(pattern, text, re.IGNORECASE) is not None
 
 
 @app.route("/")
@@ -45,22 +51,22 @@ def analyze():
             "error": "Both profile and job description are required."
         }), 400
 
-    profile_text = profile.lower()
-    job_text = job_description.lower()
-
     required_skills = [
-        skill for skill in COMMON_SKILLS
-        if skill in job_text
+        skill
+        for skill in COMMON_SKILLS
+        if contains_skill(job_description, skill)
     ]
 
     matching_skills = [
-        skill for skill in required_skills
-        if skill in profile_text
+        skill
+        for skill in required_skills
+        if contains_skill(profile, skill)
     ]
 
     missing_skills = [
-        skill for skill in required_skills
-        if skill not in profile_text
+        skill
+        for skill in required_skills
+        if not contains_skill(profile, skill)
     ]
 
     if required_skills:
