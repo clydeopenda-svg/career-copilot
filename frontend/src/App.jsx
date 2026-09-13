@@ -181,6 +181,25 @@ function App() {
                 ) : (
                   <p>No missing skills found.</p>
                 )}
+
+                {analysis.recommendations.length > 0 && (
+                  <>
+                    <h3>Recommended next steps</h3>
+
+                    <div className="recommendations">
+                      {analysis.recommendations.map((item) => (
+                        <div
+                          className="recommendation"
+                          key={item.skill}
+                        >
+                          <strong>{item.skill}</strong>
+
+                          <p>{item.recommendation}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                )}
               </>
             )}
           </div>
