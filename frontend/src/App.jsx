@@ -214,6 +214,27 @@ function App() {
                     </div>
                   </>
                 )}
+
+                {analysis.interviewQuestions.length > 0 && (
+                  <>
+                    <h3>Interview preparation</h3>
+
+                    <div className="interview-questions">
+                      {analysis.interviewQuestions.map((item, index) => (
+                        <div
+                          className="interview-question"
+                          key={`${item.skill}-${index}`}
+                        >
+                          <span className="question-skill">
+                            {item.skill}
+                          </span>
+
+                          <p>{item.question}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                )}
               </>
             )}
           </div>
