@@ -79,6 +79,18 @@ function App() {
     }
   }
 
+  function getScoreLabel(score) {
+    if (score >= 80) {
+      return "Strong match";
+    }
+
+    if (score >= 50) {
+      return "Good starting point";
+    }
+
+    return "Needs improvement";
+  }
+
   return (
     <main className="app">
       <header className="hero">
@@ -152,52 +164,92 @@ function App() {
               </p>
             ) : (
               <>
-                <h2>Your match</h2>
+                <div className="results-header">
+                  <div>
+                    <p className="results-label">
+                      YOUR MATCH
+                    </p>
 
-                <p className="score">
-                  {analysis.matchScore}%
-                </p>
+                    <h2>
+                      {getScoreLabel(analysis.matchScore)}
+                    </h2>
+                  </div>
+
+                  <div className="score-badge">
+                    {analysis.matchScore}%
+                  </div>
+                </div>
 
                 <p className="summary">
                   {analysis.summary}
                 </p>
 
-                <h3>Skills you have</h3>
+                <div className="result-grid">
+                  <section className="result-section">
+                    <h3>Your strengths</h3>
 
-                {analysis.matchingSkills.length > 0 ? (
-                  <p>
-                    {analysis.matchingSkills.join(", ")}
-                  </p>
-                ) : (
-                  <p>No matching skills found yet.</p>
-                )}
+                    {analysis.matchingSkills.length > 0 ? (
+                      <div className="skill-list">
+                        {analysis.matchingSkills.map((skill) => (
+                          <span
+                            className="skill-tag matching"
+                            key={skill}
+                          >
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
+                    ) : (
+                      <p>
+                        No matching skills found yet.
+                      </p>
+                    )}
+                  </section>
 
-                <h3>Skills to work on</h3>
+                  <section className="result-section">
+                    <h3>Skills to work on</h3>
 
-                {analysis.missingSkills.length > 0 ? (
-                  <p>
-                    {analysis.missingSkills.join(", ")}
-                  </p>
-                ) : (
-                  <p>No missing skills found.</p>
-                )}
+                    {analysis.missingSkills.length > 0 ? (
+                      <div className="skill-list">
+                        {analysis.missingSkills.map((skill) => (
+                          <span
+                            className="skill-tag missing"
+                            key={skill}
+                          >
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
+                    ) : (
+                      <p>
+                        No missing skills found.
+                      </p>
+                    )}
+                  </section>
+                </div>
 
                 {analysis.learningPriority.length > 0 && (
-                  <>
+                  <section className="result-section priority-section">
                     <h3>Your learning priority</h3>
 
                     <ol className="priority-list">
-                      {analysis.learningPriority.map((skill) => (
-                        <li key={skill}>
-                          <strong>{skill}</strong>
-                        </li>
-                      ))}
+                      {analysis.learningPriority.map(
+                        (skill, index) => (
+                          <li key={skill}>
+                            <span className="priority-number">
+                              {index + 1}
+                            </span>
+
+                            <strong>{skill}</strong>
+                          </li>
+                        )
+                      )}
                     </ol>
-                  </>
+                  </section>
                 )}
 
                 {analysis.recommendations.length > 0 && (
-                  <>
+                  <section className="result-section">
                     <h3>Recommended next steps</h3>
 
                     <div className="recommendations">
@@ -212,28 +264,35 @@ function App() {
                         </div>
                       ))}
                     </div>
-                  </>
+                  </section>
                 )}
 
                 {analysis.interviewQuestions.length > 0 && (
-                  <>
+                  <section className="result-section">
                     <h3>Interview preparation</h3>
 
-                    <div className="interview-questions">
-                      {analysis.interviewQuestions.map((item, index) => (
-                        <div
-                          className="interview-question"
-                          key={`${item.skill}-${index}`}
-                        >
-                          <span className="question-skill">
-                            {item.skill}
-                          </span>
+                    <p className="section-description">
+                      Prepare for questions related to the skills
+                      this employer is looking for.
+                    </p>
 
-                          <p>{item.question}</p>
-                        </div>
-                      ))}
+                    <div className="interview-questions">
+                      {analysis.interviewQuestions.map(
+                        (item, index) => (
+                          <div
+                            className="interview-question"
+                            key={`${item.skill}-${index}`}
+                          >
+                            <span className="question-skill">
+                              {item.skill}
+                            </span>
+
+                            <p>{item.question}</p>
+                          </div>
+                        )
+                      )}
                     </div>
-                  </>
+                  </section>
                 )}
               </>
             )}
