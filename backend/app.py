@@ -176,15 +176,23 @@ def ai_status():
 
 @app.route("/api/analyze", methods=["POST"])
 def analyze():
-    data = request.get_json()
+    data = request.get_json(silent=True)
 
-    if not data:
+    if not isinstance(data, dict):
         return jsonify({
             "error": "Request data is required."
         }), 400
 
-    profile = data.get("profile", "").strip()
-    job_description = data.get("jobDescription", "").strip()
+    profile = data.get("profile")
+    job_description = data.get("jobDescription")
+
+    if not isinstance(profile, str) or not isinstance(job_description, str):
+        return jsonify({
+            "error": "Both profile and job description are required."
+        }), 400
+
+    profile = profile.strip()
+    job_description = job_description.strip()
 
     if not profile or not job_description:
         return jsonify({
