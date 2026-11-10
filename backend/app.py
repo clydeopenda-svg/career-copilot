@@ -94,8 +94,28 @@ SKILL_PRIORITY = [
 ]
 
 
+# Other ways CVs and job adverts write each skill. "Node.js" and "React.js"
+# need no entry because the word boundary already matches them.
+SKILL_ALIASES = {
+    "javascript": ["js", "es6", "ecmascript"],
+    "typescript": ["ts"],
+    "react": ["reactjs"],
+    "node": ["nodejs"],
+    "python": ["python3"],
+    "sql": ["mysql", "postgresql", "postgres", "sqlite"],
+    "api": ["apis"],
+    "html": ["html5"],
+    "css": ["css3"],
+}
+
+
 def contains_skill(text, skill):
-    pattern = rf"\b{re.escape(skill)}\b"
+    terms = [skill, *SKILL_ALIASES.get(skill, [])]
+    alternatives = "|".join(re.escape(term) for term in terms)
+
+    # Excluding a preceding dot stops the "js" in "Node.js" from counting as
+    # JavaScript, which a plain \b would allow.
+    pattern = rf"(?<![\w.])(?:{alternatives})\b"
     return re.search(pattern, text, re.IGNORECASE) is not None
 
 

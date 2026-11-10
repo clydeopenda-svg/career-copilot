@@ -15,7 +15,7 @@ skills with a job description and providing practical feedback.
 
 - Candidate profile
 - Job description analysis
-- Skill matching
+- Skill matching that recognises common spellings such as JS, ReactJS, PostgreSQL and REST APIs
 - Skill gap recommendations
 - Interview preparation
 - AI-powered career suggestions
